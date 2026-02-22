@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ── Class-based dark mode ────────────────────────────────────── */
+@variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ── Float animation (translateY only — rotation is separate) ─── */
+@keyframes lw-float {
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Entrance animation ───────────────────────────────────────── */
+@keyframes lw-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Utility classes ──────────────────────────────────────────── */
+.lw-float {
+  animation: lw-float var(--lw-dur, 5s) ease-in-out var(--lw-del, 0s) infinite;
+}
+
+.lw-fade-up {
+  opacity: 0;
+  animation: lw-fade-up 0.7s ease-out var(--lw-del, 0s) forwards;
 }
